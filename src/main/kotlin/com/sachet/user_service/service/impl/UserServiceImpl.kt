@@ -7,8 +7,12 @@ import com.sachet.user_service.model.User
 import com.sachet.user_service.repository.UserRepository
 import com.sachet.user_service.security.JsonWebTokenUtility
 import com.sachet.user_service.service.contract.UserService
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.springframework.http.codec.multipart.FilePart
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.io.File
+import kotlin.io.path.Path
 
 @Service
 class UserServiceImpl(
@@ -37,5 +41,16 @@ class UserServiceImpl(
         if (passwordEncoder.matches(logInRequest.password, user.password))
             return jsonWebTokenUtility.generateToken(user)
         throw Errors.UserNotFound("User Not Found: Invalid Credentials")
+    }
+
+    override suspend fun uploadImage(filePart: FilePart, userId: String) {
+        val basePath = "./src/main/resources/uploads/$userId.png"
+        checkFileExists(basePath)
+        filePart.transferTo(Path(basePath)).awaitSingleOrNull()
+    }
+
+    private fun checkFileExists(basePath: String){
+        val file = File(basePath)
+        if (file.exists())file.delete()
     }
 }

@@ -23,6 +23,7 @@ class SecurityConfig(
             .pathMatchers(HttpMethod.POST, "/v1/user/signUp").permitAll()
             .pathMatchers(HttpMethod.POST, "/v1/user/login").permitAll()
             .pathMatchers(HttpMethod.GET, "/v1/user/get").hasRole("USER")
+            .pathMatchers(HttpMethod.PUT, "/v1/user/upload/*").hasRole("USER")
             .and()
             .httpBasic().disable()
             .formLogin().disable()
