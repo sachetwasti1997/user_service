@@ -1,4 +1,4 @@
-package com.sachet.user_service.service
+package com.sachet.user_service.security
 
 import com.sachet.user_service.model.User
 import io.jsonwebtoken.Claims

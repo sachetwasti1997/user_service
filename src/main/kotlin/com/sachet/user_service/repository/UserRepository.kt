@@ -14,7 +14,12 @@ class UserRepository(
     @Autowired
     private val reactiveMongoTemplate: ReactiveMongoTemplate
 ) {
-    suspend fun findUserByUserName(userName: String): User?{
+
+    suspend fun saveUser(user: User): User?{
+        return reactiveMongoTemplate.save(user).awaitFirstOrNull()
+    }
+
+    suspend fun findUserByUserName(userName: String?): User?{
         val query = Query(Criteria.where("userName").`is`(userName))
         return reactiveMongoTemplate.find(query, User::class.java).awaitFirstOrNull()
     }

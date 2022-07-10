@@ -1,4 +1,4 @@
-package com.sachet.user_service.service
+package com.sachet.user_service.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
@@ -20,14 +20,9 @@ class SecurityConfig(
     fun springSecurityWebFilterChain(serverHttpSecurity: ServerHttpSecurity): SecurityWebFilterChain{
         return serverHttpSecurity
             .authorizeExchange()
-            .pathMatchers(HttpMethod.POST, "/v1/notes/user/save").permitAll()
-            .pathMatchers(HttpMethod.POST, "/v1/notes/user/login").permitAll()
-            .pathMatchers(HttpMethod.GET, "/v1/notes/user/{userId}").hasRole("USER")
-            .pathMatchers(HttpMethod.GET, "/v1/notes/user/me").hasRole("USER")
-            .pathMatchers(HttpMethod.GET, "/note/user").hasRole("USER")
-            .pathMatchers(HttpMethod.POST, "/note/save").hasRole("USER")
-            .pathMatchers(HttpMethod.GET, "/note/single/{noteId}").hasRole("USER")
-            .pathMatchers(HttpMethod.DELETE, "/note/{noteId}").hasRole("USER")
+            .pathMatchers(HttpMethod.POST, "/v1/user/signUp").permitAll()
+            .pathMatchers(HttpMethod.POST, "/v1/user/login").permitAll()
+            .pathMatchers(HttpMethod.GET, "/v1/user/get").hasRole("USER")
             .and()
             .httpBasic().disable()
             .formLogin().disable()
