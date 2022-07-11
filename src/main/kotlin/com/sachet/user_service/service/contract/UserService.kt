@@ -8,5 +8,4 @@ import org.springframework.http.codec.multipart.FilePart
 interface UserService {
     suspend fun signUp(user: User): ApiResponse
     suspend fun login(logInRequest: LogInRequest): String
-    suspend fun uploadImage(filePart: FilePart, userId: String)
 }

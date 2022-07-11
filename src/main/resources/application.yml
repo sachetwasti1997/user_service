@@ -1,6 +1,19 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA2WPIZDR2RRBACE5I
+      secret-key: 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
+
+application:
+  bucket:
+    name: springusebucket
+
+
 spring:
   data:
     mongodb:
       database: user-service
       port: 27017
       host: localhost
+  webflux:
+    static-path-pattern: /uploads/**

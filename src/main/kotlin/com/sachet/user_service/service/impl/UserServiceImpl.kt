@@ -20,7 +20,6 @@ class UserServiceImpl(
     private val passwordEncoder: BCryptPasswordEncoder,
     private val jsonWebTokenUtility: JsonWebTokenUtility
 ) : UserService {
-
     override suspend fun signUp(user: User): ApiResponse {
         val existingUser = user.userName?.let { findUserByUserName(it) }
         existingUser?.let {
@@ -41,16 +40,5 @@ class UserServiceImpl(
         if (passwordEncoder.matches(logInRequest.password, user.password))
             return jsonWebTokenUtility.generateToken(user)
         throw Errors.UserNotFound("User Not Found: Invalid Credentials")
-    }
-
-    override suspend fun uploadImage(filePart: FilePart, userId: String) {
-        val basePath = "./src/main/resources/uploads/$userId.png"
-        checkFileExists(basePath)
-        filePart.transferTo(Path(basePath)).awaitSingleOrNull()
-    }
-
-    private fun checkFileExists(basePath: String){
-        val file = File(basePath)
-        if (file.exists())file.delete()
     }
 }

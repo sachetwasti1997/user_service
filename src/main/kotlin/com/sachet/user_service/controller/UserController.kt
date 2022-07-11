@@ -31,12 +31,4 @@ class UserController(
 
     @PostMapping("/login")
     suspend fun login(@RequestBody @Valid logInRequest: LogInRequest) = userService.login(logInRequest)
-
-    @PutMapping("/upload/{id}")
-    suspend fun uploadProfileImage(@PathVariable id: String, @RequestPart("user_image")file: Mono<FilePart>){
-        val userImage = file.awaitSingleOrNull()
-        userImage?.let {
-            userService.uploadImage(it, id)
-        }
-    }
 }
