@@ -1,31 +1,33 @@
 package com.sachet.user_service.controller
 
-import com.sachet.user_service.service.contract.ImageService
-import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.http.codec.multipart.FilePart
-import org.springframework.web.bind.annotation.*
-import reactor.core.publisher.Mono
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import javax.imageio.ImageIO
 
-@RestController
-@RequestMapping("/images")
-class ImageHandler(
-    private val imageService: ImageService
-) {
-    @GetMapping("/get/{images}")
-    fun getImage(@PathVariable images: String) = ResponseEntity.ok().body(imageService.getImage(images))
-
-    @PutMapping("/upload/{id}")
-    suspend fun uploadProfileImage(@PathVariable id: String, @RequestPart("user_image")file: Mono<FilePart>){
-        val userImage = file.awaitSingleOrNull()
-        userImage?.let {
-            imageService.uploadImage(it, id)
-        }
-    }
-}
+//@RestController
+//@RequestMapping("/images")
+//class ImageHandler {
+//    @GetMapping("/get/{images}")
+//    fun getImage(@PathVariable images: String): ResponseEntity<ByteArray>? {
+//        val path = "./src/main/resources/uploads/$images"
+//        val file = File(path)
+//        if (file.exists()){
+////            throw Exception()
+//            val b = ByteArray(file.length().toInt())
+//            val inStrm = FileInputStream(file)
+//            inStrm.read(b)
+//            return ResponseEntity.ok()
+//                .contentType(MediaType.MULTIPART_FORM_DATA)
+//                .body(b)
+//        }
+//        return null
+//    }
+//}

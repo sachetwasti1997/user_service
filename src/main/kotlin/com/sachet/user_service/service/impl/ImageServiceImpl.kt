@@ -29,6 +29,7 @@ class ImageServiceImpl : ImageService {
     override fun getImage(images: String): ByteArray? {
         val path = "$path$images"
         val file = File(path)
+        println(file.exists())
         if (file.exists()){
             val b = ByteArray(file.length().toInt())
             val inStrm = FileInputStream(file)

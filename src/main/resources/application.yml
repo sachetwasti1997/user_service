@@ -4,5 +4,8 @@ spring:
       database: user-service
       port: 27017
       host: localhost
-  webflux:
-    static-path-pattern: /uploads/**
+#  webflux:
+#    static-path-pattern: /images/get/*
+#  web:
+#    resources:
+#      static-locations: "classpath:/uploads/"
