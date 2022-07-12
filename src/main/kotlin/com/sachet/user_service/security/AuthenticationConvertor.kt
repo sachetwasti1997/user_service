@@ -32,7 +32,7 @@ class AuthenticationConvertor(
             authorities.add(SimpleGrantedAuthority(it))
         }
         val passAuthToken = UsernamePasswordAuthenticationToken(
-            user?.userName,
+            user?.userId,
             token,
             authorities
         )

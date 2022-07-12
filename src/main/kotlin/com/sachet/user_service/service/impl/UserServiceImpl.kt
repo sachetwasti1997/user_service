@@ -7,7 +7,9 @@ import com.sachet.user_service.model.User
 import com.sachet.user_service.repository.UserRepository
 import com.sachet.user_service.security.JsonWebTokenUtility
 import com.sachet.user_service.service.contract.UserService
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.springframework.data.domain.Pageable
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
@@ -40,5 +42,10 @@ class UserServiceImpl(
         if (passwordEncoder.matches(logInRequest.password, user.password))
             return jsonWebTokenUtility.generateToken(user)
         throw Errors.UserNotFound("User Not Found: Invalid Credentials")
+    }
+
+    override fun getAllUser(userId: String, pageable: Pageable): Flow<User> {
+        println(userId)
+        return userRepository.findAllUser(userId, pageable)
     }
 }

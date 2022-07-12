@@ -5,16 +5,15 @@ import com.sachet.user_service.model.ApiResponse
 import com.sachet.user_service.model.User
 import com.sachet.user_service.service.contract.UserService
 import kotlinx.coroutines.reactor.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingleOrNull
-import org.springframework.http.codec.multipart.FilePart
+import org.springframework.data.domain.PageRequest
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
+import java.security.Principal
 import javax.validation.Valid
 
 @RestController
@@ -31,4 +30,8 @@ class UserController(
 
     @PostMapping("/login")
     suspend fun login(@RequestBody @Valid logInRequest: LogInRequest) = userService.login(logInRequest)
+
+    @GetMapping("/all/{p}/{sz}")
+    fun getAllUsers(principal: Principal, @PathVariable p: Int, @PathVariable sz: Int) =
+        userService.getAllUser(principal.name, PageRequest.of(p, sz))
 }
