@@ -26,16 +26,4 @@ class ImageServiceImpl : ImageService {
         if (file.exists())file.delete()
     }
 
-    override fun getImage(images: String): ByteArray? {
-        val path = "$path$images"
-        val file = File(path)
-        println(file.exists())
-        if (file.exists()){
-            val b = ByteArray(file.length().toInt())
-            val inStrm = FileInputStream(file)
-            inStrm.read(b)
-            return b
-        }
-        return null
-    }
 }
